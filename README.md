@@ -1,4 +1,4 @@
-## 1. Database Design
+# 1. Database Design
 
   The system contains three main entities:
 
@@ -53,6 +53,65 @@
 <p align="center">
   <img src="/uml.jpg" width="600"/>
 </p>
+
+
+
+# 2. REST API Design
+
+This section outlines the RESTful API endpoints for core features like authentication, posts, comments, and sentiment analytics.
+
+---
+
+### 🔐 2.1 Authentication (JWT)
+
+| Method | Endpoint        | Description                 | Access       |
+|--------|-----------------|-----------------------------|--------------|
+| POST   | `/auth/signup`  | Register a new user         | Public       |
+| POST   | `/auth/login`   | Authenticate and get JWT    | Public       |
+
+---
+
+### 🧑‍💻 2.2 User Endpoints
+
+| Method | Endpoint        | Description             | Access       |
+|--------|-----------------|-------------------------|--------------|
+| GET    | `/users/me`     | Get current user data   | Authenticated|
+| GET    | `/users/:id`    | Get user by ID          | Admin        |
+
+---
+
+### 📝 2.3 Post Endpoints
+
+| Method | Endpoint        | Description                             | Access       |
+|--------|-----------------|-----------------------------------------|--------------|
+| GET    | `/posts/`       | Get all posts                           | Public       |
+| GET    | `/posts/:id`    | Get a single post by ID                 | Public       |
+| POST   | `/posts/`       | Create a new post (with sentiment)      | Normal User  |
+| DELETE | `/posts/:id`    | Delete your own post                    | Normal User  |
+
+---
+
+### 💬 2.4 Comment Endpoints
+
+| Method | Endpoint                | Description                              | Access       |
+|--------|-------------------------|------------------------------------------|--------------|
+| POST   | `/posts/:id/comments`   | Add a comment to a post (with sentiment) | Normal User  |
+| GET    | `/posts/:id/comments`   | Get comments for a post                  | Public       |
+| DELETE | `/comments/:id`         | Delete your own comment                  | Normal User  |
+
+---
+
+### 📊 2.5 Admin Analytics Dashboard
+
+| Method | Endpoint                    | Description                              | Access |
+|--------|-----------------------------|------------------------------------------|--------|
+| GET    | `/admin/sentiment-summary`  | Pie chart: Sentiment distribution        | Admin  |
+| GET    | `/admin/sentiment-trend`    | Line chart: Sentiment over time          | Admin  |
+| GET    | `/admin/sentiment-breakdown`| Bar chart: Sentiment by user/content     | Admin  |
+| GET    | `/admin/posts`              | View all posts                           | Admin  |
+| GET    | `/admin/comments`           | View all comments                        | Admin  |
+
+
 
 
 
