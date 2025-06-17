@@ -1,5 +1,7 @@
 # 📘 MicroForum — Design Document
 
+**MicroForum** is a forum-style platform where users can create posts and comments. Each content item is automatically analyzed for sentiment using an NLP service. Admin users can monitor sentiment trends via an analytics dashboard.
+
 ## 1. Database Design
 
 The system consists of three main entities:
