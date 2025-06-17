@@ -7,7 +7,7 @@
 - `comments`: Created on posts, with sentiment metadata.
 
 
-  1.2 Tables
+## 1.2 Tables
   
   ####  Users Table
 
@@ -46,5 +46,13 @@
 | author_id        | UUID / INT FK | REFERENCES users(id)       | Author of the comment         |
 | sentiment_score  | FLOAT         |                            | Sentiment score (-1 to 1)     |
 | sentiment_label  | TEXT          |                            | Sentiment label               |
+
+
+## 1.3 UML DIAGRAM
+
+<p align="center">
+  <img src="/uml.jpg" width="600"/>
+</p>
+
 
 
