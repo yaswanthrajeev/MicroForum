@@ -56,4 +56,7 @@ def delete_post(post_id: int, db: Session = Depends(get_db), current_user: User 
 def get_allPost(user_id : int, db: Session = Depends(get_db)):
     posts = db.query(Post).filter(Post.author_id == user_id).all()
     return posts
-
+@post_router.get("/all", response_model=List[PostResponse])
+def get_all_posts(db: Session = Depends(get_db)):
+    posts = db.query(Post).all()
+    return posts
