@@ -4,6 +4,8 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import { useState } from "react";
+import AllPosts from './components/AllPosts';
+import CreatePost from './components/CreatePost';
 
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/create-post" element={isLoggedIn ? <CreatePost /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/" element={<AllPosts />} />
         {/* Add your home/dashboard or other routes here */}
       </Routes>
     </Router>

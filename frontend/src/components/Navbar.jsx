@@ -21,6 +21,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         </>
       ) : (
         <>
+          <Link to="/create-post">Create Post</Link>
           <button onClick={handleLogout}>Logout</button>
         </>
       )}
