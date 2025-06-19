@@ -1,6 +1,7 @@
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 from datetime import datetime
+from app.schemas.comment import CommentResponse
 
 class PostCreate(BaseModel):
     title: str
@@ -11,6 +12,7 @@ class PostResponse(BaseModel):
     title: str
     body: str
     author_id: int
-    timestamp: datetime
+    created_at: datetime
     sentiment_score: Optional[float] = None
     sentiment_label: Optional[str] = None
+    comments: List[CommentResponse] = []

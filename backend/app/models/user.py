@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship
 from enum import Enum as PyEnum
 from app.db.base import Base
 import datetime
+from app.models.post import Post
+from app.models.comment import Comment
 
 class UserRole(PyEnum):
     NORMAL = "normal"
@@ -17,7 +19,15 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     role = Column(Enum(UserRole), default=UserRole.NORMAL, nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-
-    posts = relationship("Post", back_populates="author")
-    comments = relationship("Comment", back_populates="author")
+    
+    posts = relationship(
+        "Post",
+        back_populates="author",
+        foreign_keys="[Post.author_id]"
+    )
+    comments = relationship(
+        "Comment",
+        back_populates="author",
+        foreign_keys="[Comment.author_id]"
+    )
     __table_args__ = {'extend_existing': True}

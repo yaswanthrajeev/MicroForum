@@ -10,11 +10,19 @@ class Comment(Base):
     post_id = Column(Integer, ForeignKey("posts.id"), nullable=False)
     body = Column(String, nullable=False)
     author_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    created_by = Column(Integer, ForeignKey("users.id"),nullable=True)
+    updated_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow)
+
     sentiment_score = Column(Float)
     sentiment_label = Column(String)
 
     post = relationship("Post", back_populates="comments")
-    author = relationship("User", back_populates="comments")
+    author = relationship(
+        "User",
+        back_populates="comments",
+        foreign_keys="[Comment.author_id]"
+    )
 
 

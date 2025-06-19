@@ -10,7 +10,7 @@ class CommentResponse(BaseModel):
     post_id: int
     body: str
     author_id: int
-    timestamp: datetime
+    created_at: datetime
     sentiment_score: Optional[float] = None
     sentiment_label: Optional[str] = None
 

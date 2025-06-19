@@ -9,6 +9,7 @@ from fastapi.security import OAuth2PasswordBearer
 from app.models.post import Post
 from app.models.comment import Comment
 from schemas.comment import CommentResponse, CommentCreate
+from app.services import comment as comment_service
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 comment_route=APIRouter()
@@ -32,18 +33,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 @comment_route.post("/create",response_model=CommentResponse)
 def create_comment(comment : CommentCreate, post_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    post=db.query(Post).filter(Post.id == post_id).first()
-    if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
-    new_comment= Comment(
-        post_id=post_id,
-        body=comment.body,
-        author_id=current_user.id,
-    )
-    db.add(new_comment)
-    db.commit()
-    db.refresh(new_comment)
-    return new_comment
+   return comment_service.create_comment(db,post_id, current_user.id,comment.body)
 
 @comment_route.delete("/delete/{comment_id}", response_model= CommentResponse)
 def delete_comment(comment_id: int,db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
