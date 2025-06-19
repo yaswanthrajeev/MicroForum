@@ -2,9 +2,11 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from db.session import engine, SQLALCHEMY_DATABASE_URL
-from models import user, post, comment
-from db.base import Base
+from app.db.session import engine, SQLALCHEMY_DATABASE_URL
+from app.db.base import Base
+from app.models.user import User
+from app.models.post import Post
+from app.models.comment import Comment
 
 print(f"Using database URL: {SQLALCHEMY_DATABASE_URL}")
 

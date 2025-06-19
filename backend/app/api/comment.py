@@ -3,11 +3,11 @@ from fastapi import APIRouter,Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from schemas.post import PostCreate, PostResponse
 from services.jwt import verify_access_token
-from models.user import User
-from db.session import SessionLocal
+from app.models.user import User
+from app.db.session import SessionLocal
 from fastapi.security import OAuth2PasswordBearer
-from models.post import Post
-from models.comment import Comment
+from app.models.post import Post
+from app.models.comment import Comment
 from schemas.comment import CommentResponse, CommentCreate
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from db.base import Base
+from app.db.base import Base
 import datetime
 
 class Comment(Base):
@@ -17,5 +17,4 @@ class Comment(Base):
     post = relationship("Post", back_populates="comments")
     author = relationship("User", back_populates="comments")
 
-from .post import Post
-from .user import User
+

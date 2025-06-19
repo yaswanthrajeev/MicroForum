@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, Enum
 from sqlalchemy.orm import relationship
 from enum import Enum as PyEnum
-from db.base import Base
+from app.db.base import Base
 import datetime
 
 class UserRole(PyEnum):
@@ -20,6 +20,4 @@ class User(Base):
 
     posts = relationship("Post", back_populates="author")
     comments = relationship("Comment", back_populates="author")
-
-from .post import Post
-from .comment import Comment
+    __table_args__ = {'extend_existing': True}
