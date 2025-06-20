@@ -2,9 +2,22 @@ from fastapi import HTTPException
 from app.api import post
 from app.repositories import comment as comment_repo
 from app.models.comment import Comment
-def create_comment(db, post_id: int, user_id: int, body: str):
+from app.nlp.sentiment import analyze_sentiment
+
+def process_comment(comment_text):
+    label, score = analyze_sentiment(comment_text)
+    # Save to DB, alert admin, etc.
+
+def create_and_process_comment(db, post_id: int, user_id: int, body: str):
     # The repository already raises HTTPException if post is not found
-    return comment_repo.create_comment(db, post_id, user_id, body)
+    comment=comment_repo.create_comment(db, post_id, user_id, body)
+
+    label,score=analyze_sentiment(body)
+    comment.sentiment_score = score
+    comment.sentiment_label = label
+    db.commit()
+    return comment
+    
 
 def delete_comment(db,comment_id: int, current_user):
     return comment_repo.delete_comment(db, comment_id)

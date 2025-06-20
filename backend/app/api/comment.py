@@ -31,9 +31,21 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
     return user
 
-@comment_route.post("/create",response_model=CommentResponse)
-def create_comment(comment : CommentCreate, post_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-   return comment_service.create_comment(db,post_id, current_user.id,comment.body)
+@comment_route.post("/create", response_model=CommentResponse)
+def create_and_process_comment(comment: CommentCreate, post_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    created_comment = comment_service.create_and_process_comment(db, post_id, current_user.id, comment.body)
+    # Build response dict with author_name
+    response = {
+        "id": created_comment.id,
+        "post_id": created_comment.post_id,
+        "body": created_comment.body,
+        "author_id": created_comment.author_id,
+        "author_name": current_user.username,
+        "created_at": created_comment.created_at,
+        "sentiment_score": created_comment.sentiment_score,
+        "sentiment_label": created_comment.sentiment_label,
+    }
+    return response
 
 @comment_route.delete("/delete/{comment_id}", response_model= CommentResponse)
 def delete_comment(comment_id: int,db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):

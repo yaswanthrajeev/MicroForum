@@ -5,6 +5,7 @@ from app.db.session import SessionLocal
 from app.services import admin as admin_service
 from app.schemas.post import PostResponse
 from app.models.post import Post
+from app.models.comment import Comment
 
 admin_router = APIRouter()
 
@@ -40,4 +41,29 @@ def delete_comment(comment_id: int, db: Session = Depends(get_db)):
     if not comment:
         raise HTTPException(status_code=404, detail="Comment not found")
     return {"message": f"Post with id {comment_id} has been deleted successfully"}
-    
+
+@admin_router.get("/posts/sentiment-summary")
+def posts_sentiment_summary(db: Session = Depends(get_db)):
+    posts = db.query(Post).all()
+    summary = []
+    for post in posts:
+        comments = db.query(Comment).filter(Comment.post_id == post.id).all()
+        if not comments:
+            avg_score = None
+            label_counts = {"Positive": 0, "Negative": 0, "Neutral": 0}
+        else:
+            scores = [c.sentiment_score for c in comments if c.sentiment_score is not None]
+            avg_score = sum(scores) / len(scores) if scores else None
+            label_counts = {"Positive": 0, "Negative": 0, "Neutral": 0}
+            for c in comments:
+                if c.sentiment_label in label_counts:
+                    label_counts[c.sentiment_label] += 1
+        summary.append({
+            "post_id": post.id,
+            "title": post.title,
+            "average_sentiment_score": avg_score,
+            "sentiment_label_counts": label_counts,
+            "total_comments": len(comments)
+        })
+    return summary
+
