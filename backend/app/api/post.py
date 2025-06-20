@@ -48,5 +48,4 @@ def get_allPost(user_id : int, db: Session = Depends(get_db)):
     return post_service.get_all_posts_by_user(db,user_id)
 @post_router.get("/all", response_model=List[PostResponse])
 def get_all_posts(db: Session = Depends(get_db)):
-    posts = db.query(Post).all()
-    return posts
+    return post_service.get_all_posts(db)

@@ -19,3 +19,9 @@ def get_all_posts_by_user(db, user_id):
     if not posts:
         return []
     return posts
+
+def get_all_posts(db):
+    posts = db.query(Post).all()
+    if not posts:
+        return []
+    return posts

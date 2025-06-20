@@ -13,3 +13,5 @@ def delete_post(db, post_id, current_user):
     return post
 def get_all_posts_by_user(db, user_id):
     return post_repo.get_all_posts_by_user(db, user_id)
+def get_all_posts(db):
+    return post_repo.get_all_posts(db)
