@@ -16,3 +16,16 @@ def create_comment(db, post_id: int, user_id: int, body: str):
     db.commit()
     db.refresh(new_comment)
     return new_comment
+
+def delete_comment(db, comment_id: int):
+    comment = db.query(Comment).filter(Comment.id == comment_id).first()
+    if not comment:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    db.delete(comment)
+    db.commit()
+    return comment
+
+
+def get_allComment(post_id : int, db):
+    comments = db.query(Comment).filter(Comment.post_id == post_id).all()
+    return comments

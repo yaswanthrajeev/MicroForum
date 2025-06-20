@@ -37,16 +37,8 @@ def create_comment(comment : CommentCreate, post_id: int, db: Session = Depends(
 
 @comment_route.delete("/delete/{comment_id}", response_model= CommentResponse)
 def delete_comment(comment_id: int,db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    comment= db.query(Comment).filter(Comment.id==comment_id).first()
-    if not comment:
-        raise HTTPException(status_code=404, detail="comment not found")
-    if comment.author_id != current_user.id and current_user.role.value != "admin":
-        raise HTTPException(status_code=403, detail="Not authorized to delete this comment")
-    db.delete(comment)
-    db.commit()
-    return comment
+    return comment_service.delete_comment(db, comment_id,current_user)
 
 @comment_route.get("/getAllComments/{post_id}/comments", response_model= List[CommentResponse])
 def get_allComment(post_id : int, db: Session = Depends(get_db)):
-    comments = db.query(Comment).filter(Comment.post_id == post_id).all()
-    return comments
+    return comment_service.get_allComment(post_id, db)
