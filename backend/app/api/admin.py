@@ -6,7 +6,7 @@ from app.services import admin as admin_service
 from app.schemas.post import PostResponse
 from app.models.post import Post
 from app.models.comment import Comment
-
+from app.services import sentiment as sentiment_service
 admin_router = APIRouter()
 
 def get_db():
@@ -42,22 +42,24 @@ def delete_comment(comment_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Comment not found")
     return {"message": f"Post with id {comment_id} has been deleted successfully"}
 
-@admin_router.get("/posts/sentiment-summary")
+@admin_router.get("/sentiment-summary")
 def posts_sentiment_summary(db: Session = Depends(get_db)):
-    posts = db.query(Post).all()
+    return sentiment_service.posts_sentiment_summary(db)
+    posts = sentiment_service.posts_sentiment_summary(db)
     summary = []
     for post in posts:
         comments = db.query(Comment).filter(Comment.post_id == post.id).all()
-        if not comments:
-            avg_score = None
-            label_counts = {"Positive": 0, "Negative": 0, "Neutral": 0}
-        else:
+        avg_score = None
+        label_counts = {"Positive": 0, "Negative": 0, "Neutral": 0}
+        if comments:
             scores = [c.sentiment_score for c in comments if c.sentiment_score is not None]
             avg_score = sum(scores) / len(scores) if scores else None
-            label_counts = {"Positive": 0, "Negative": 0, "Neutral": 0}
             for c in comments:
-                if c.sentiment_label in label_counts:
-                    label_counts[c.sentiment_label] += 1
+                label = (c.sentiment_label or "Neutral").capitalize()
+                if label in label_counts:
+                    label_counts[label] += 1
+                else:
+                    label_counts["Neutral"] += 1  # fallback for unexpected labels
         summary.append({
             "post_id": post.id,
             "title": post.title,
@@ -66,4 +68,4 @@ def posts_sentiment_summary(db: Session = Depends(get_db)):
             "total_comments": len(comments)
         })
     return summary
-
+# ...existing code...
