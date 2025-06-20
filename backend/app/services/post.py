@@ -2,7 +2,19 @@ from fastapi import HTTPException
 from app.repositories import post as post_repo
 from app.models.post import Post
 def create_post(db,post):
-    return post_repo.create_post(db, post)
+    created_post = post_repo.create_post(db, post)
+    # Build and return a dict with all required fields for PostResponse
+    return {
+        "id": created_post.id,
+        "title": created_post.title,
+        "body": created_post.body,
+        "author_id": created_post.author_id,
+        "author_name": created_post.author.username if created_post.author else "",
+        "created_at": created_post.created_at,
+        "sentiment_score": created_post.sentiment_score,
+        "sentiment_label": created_post.sentiment_label,
+        "comments": [],
+    }
 
 def delete_post(db, post_id, current_user):
     post = post_repo.delete_post(db, post_id)

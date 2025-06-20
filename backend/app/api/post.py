@@ -36,7 +36,7 @@ def create_post(post: PostCreate, db: Session = Depends(get_db), current_user: U
         body=post.body,
         author_id=current_user.id
     )
-    
+    # Call the service layer to handle creation and response formatting
     return post_service.create_post(db, new_post)
 
 @post_router.delete("/delete/{post_id}", response_model=PostResponse)
