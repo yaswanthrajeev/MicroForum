@@ -1,0 +1,27 @@
+from app.repositories import sentiment as sentiment_repo
+from app.models.comment import Comment
+
+def posts_sentiment_summary(db):
+    posts = sentiment_repo.posts_sentiment_summary(db)
+    summary = []
+    for post in posts:
+        comments = db.query(Comment).filter(Comment.post_id == post.id).all()
+        avg_score = None
+        label_counts = {"Positive": 0, "Negative": 0, "Neutral": 0}
+        if comments:
+            scores = [c.sentiment_score for c in comments if c.sentiment_score is not None]
+            avg_score = sum(scores) / len(scores) if scores else None
+            for c in comments:
+                label = (c.sentiment_label or "Neutral").capitalize()
+                if label in label_counts:
+                    label_counts[label] += 1
+                else:
+                    label_counts["Neutral"] += 1  # fallback for unexpected labels
+        summary.append({
+            "post_id": post.id,
+            "title": post.title,
+            "average_sentiment_score": avg_score,
+            "sentiment_label_counts": label_counts,
+            "total_comments": len(comments)
+        })
+    return summary

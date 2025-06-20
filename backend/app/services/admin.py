@@ -37,4 +37,35 @@ def delete_comment(db, comment_id: int):
         return None
     admin_repository.delete_comment(db, comment)
     return comment
-    
+
+def post_sentiment(db, post_id: int):
+    post = db.query(Post).filter(Post.id == post_id).first()
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+    if not post.comments:
+        return {
+            "average_sentiment_score": None,
+            "overall_sentiment_label": "Neutral",
+            "sentiment_label_counts": {"Positive": 0, "Negative": 0, "Neutral": 0},
+            "total_comments": 0
+        }
+    score = 0
+    label_counts = {"Positive": 0, "Negative": 0, "Neutral": 0}
+    for comment in post.comments:
+        if comment.sentiment_score is not None:
+            score += comment.sentiment_score
+        if comment.sentiment_label in label_counts:
+            label_counts[comment.sentiment_label] += 1
+    avg_score = score / len(post.comments)
+    if avg_score == 0:
+        overall_label = "Neutral"
+    elif avg_score > 0:
+        overall_label = "Positive"
+    else:
+        overall_label = "Negative"
+    return {
+        "average_sentiment_score": avg_score,
+        "overall_sentiment_label": overall_label,
+        "sentiment_label_counts": label_counts,
+        "total_comments": len(post.comments)
+    }
