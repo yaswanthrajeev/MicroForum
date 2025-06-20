@@ -19,6 +19,8 @@ const Login = ({ setIsLoggedIn }) => {
                 password,
             });
             localStorage.setItem("token", response.data.access_token);
+            // Store isAdmin based on role from backend
+            localStorage.setItem("isAdmin", response.data.role === "admin" ? "true" : "false");
             setIsLoggedIn(true); // Update auth state
             setSuccess(true);
             setTimeout(() => {

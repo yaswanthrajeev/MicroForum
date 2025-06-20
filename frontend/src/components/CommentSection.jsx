@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 const CommentSection = ({ postId }) => {
@@ -6,18 +6,19 @@ const CommentSection = ({ postId }) => {
   const [body, setBody] = useState("");
   const [error, setError] = useState("");
 
-  const fetchComments = async () => {
+  // Memoize fetchComments to avoid unnecessary re-creations
+  const fetchComments = useCallback(async () => {
     try {
       const res = await axios.get(`http://localhost:8000/comment/getAllComments/${postId}/comments`);
       setComments(res.data);
     } catch (err) {
       setComments([]);
     }
-  };
+  }, [postId]);
 
   useEffect(() => {
     fetchComments();
-  }, [postId]);
+  }, [fetchComments]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,9 +31,21 @@ const CommentSection = ({ postId }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setBody("");
-      fetchComments();
+      await fetchComments(); // Fetch comments again after posting
     } catch (err) {
       setError("Failed to add comment.");
+    }
+  };
+
+  const handleDelete = async (commentId) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.get(`http://localhost:8000/comment/delete/${commentId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      await fetchComments(); // Refresh comments after deletion
+    } catch (err) {
+      setError("Failed to delete comment.");
     }
   };
 
@@ -42,6 +55,8 @@ const CommentSection = ({ postId }) => {
       {comments.map(comment => (
         <div key={comment.id} className="comment-item">
           <p>{comment.body}</p>
+          <p style={{ color: "red" }}>{comment.author_name}</p>
+          <button onClick={() => handleDelete(comment.id)}>Delete</button>
         </div>
       ))}
       <form onSubmit={handleSubmit} className="comment-form">

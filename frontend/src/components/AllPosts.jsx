@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CommentSection from "./CommentSection";
-import "./AllPosts.css";
+import ".././styles/AllPosts.css"; // Adjust the path as necessary
 
 const AllPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -28,6 +28,7 @@ const AllPosts = () => {
         <div key={post.id} className="post-card">
           <h3>{post.title}</h3>
           <p>{post.body}</p>
+          <p>{post.author_name}</p>
           <button className="comment-toggle-btn" onClick={() => setSelectedPostId(selectedPostId === post.id ? null : post.id)}>
             {selectedPostId === post.id ? "Hide Comments" : "Show Comments"}
           </button>

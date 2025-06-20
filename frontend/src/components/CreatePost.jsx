@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Form.css";
+import "../styles/Form.css";
 
 const CreatePost = ({ onPostCreated }) => {
   const [title, setTitle] = useState("");
