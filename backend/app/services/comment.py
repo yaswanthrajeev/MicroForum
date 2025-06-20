@@ -10,5 +10,19 @@ def delete_comment(db,comment_id: int, current_user):
     return comment_repo.delete_comment(db, comment_id)
 
 
-def get_allComment(post_id : int, db):
-    return comment_repo.get_allComment(post_id, db)
+def get_allComment(post_id: int, db):
+    comments = comment_repo.get_allComment(post_id, db)
+    result = []
+    for comment in comments:
+        comment_dict = {
+            "id": comment.id,
+            "post_id": comment.post_id,
+            "body": comment.body,
+            "author_id": comment.author_id,
+            "author_name": comment.author.username if comment.author else "",
+            "created_at": comment.created_at,
+            "sentiment_score": comment.sentiment_score,
+            "sentiment_label": comment.sentiment_label,
+        }
+        result.append(comment_dict)
+    return result
