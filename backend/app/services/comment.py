@@ -20,7 +20,7 @@ def create_and_process_comment(db, post_id: int, user_id: int, body: str):
     
 
 def delete_comment(db,comment_id: int, current_user):
-    return comment_repo.delete_comment(db, comment_id)
+    return comment_repo.delete_comment(db, comment_id,current_user)
 
 
 def get_allComment(post_id: int, db):

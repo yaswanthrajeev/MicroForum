@@ -17,10 +17,13 @@ def create_comment(db, post_id: int, user_id: int, body: str):
     db.refresh(new_comment)
     return new_comment
 
-def delete_comment(db, comment_id: int):
+def delete_comment(db, comment_id: int, current_user):
     comment = db.query(Comment).filter(Comment.id == comment_id).first()
     if not comment:
         raise HTTPException(status_code=404, detail="Comment not found")
+    # Check if the comment belongs to the current user
+    if comment.author_id != current_user.id  and current_user.role != 'admin':
+        raise HTTPException(status_code=403, detail="Not authorized to delete this comment")
     db.delete(comment)
     db.commit()
     return comment

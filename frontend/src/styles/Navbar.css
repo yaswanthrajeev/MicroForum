@@ -1,20 +1,46 @@
 .navbar {
-  background: #222;
-  color: #fff;
-  padding: 1rem;
+  background: #111827;
+  color: #f9fafb;
+  padding: 1rem 2rem;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  font-family: Arial, sans-serif;
 }
-.navbar a, .navbar button {
-  color: #fff;
+
+.navbar a,
+.navbar button {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f9fafb;
   background: none;
   border: none;
-  margin-right: 1.5rem;
-  font-size: 1rem;
-  text-decoration: none;
   cursor: pointer;
-  transition: color 0.2s;
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color 0.2s ease;
 }
-.navbar a:hover, .navbar button:hover {
-  color: #61dafb;
+
+.navbar a::after,
+.navbar button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0%;
+  background-color: #3b82f6;
+  transition: width 0.25s ease;
+}
+
+.navbar a:hover,
+.navbar button:hover {
+  color: #3b82f6;
+}
+
+.navbar a:hover::after,
+.navbar button:hover::after {
+  width: 100%;
 }

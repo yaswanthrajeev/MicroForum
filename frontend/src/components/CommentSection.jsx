@@ -40,7 +40,7 @@ const CommentSection = ({ postId }) => {
   const handleDelete = async (commentId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.get(`http://localhost:8000/comment/delete/${commentId}`,
+      await axios.delete(`http://localhost:8000/comment/delete/${commentId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       await fetchComments(); // Refresh comments after deletion
