@@ -47,9 +47,10 @@ def create_and_process_comment(comment: CommentCreate, post_id: int, db: Session
     }
     return response
 
-@comment_route.delete("/delete/{comment_id}", response_model= CommentResponse)
-def delete_comment(comment_id: int,db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    return comment_service.delete_comment(db, comment_id,current_user)
+@comment_route.delete("/delete/{comment_id}", response_model=CommentResponse)
+def delete_comment(comment_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    return comment_service.delete_comment(db, comment_id, current_user)
+
 
 @comment_route.get("/getAllComments/{post_id}/comments", response_model= List[CommentResponse])
 def get_allComment(post_id : int, db: Session = Depends(get_db)):

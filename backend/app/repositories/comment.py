@@ -22,7 +22,9 @@ def delete_comment(db, comment_id: int, current_user):
     if not comment:
         raise HTTPException(status_code=404, detail="Comment not found")
     # Check if the comment belongs to the current user
-    if comment.author_id != current_user.id  and current_user.role != 'admin':
+    print(f"Comment Owner: {comment.author_id}, Current User: {current_user.id}, Current User Role: {current_user.role}")
+
+    if comment.author_id != current_user.id  and current_user.role.value != 'admin':
         raise HTTPException(status_code=403, detail="Not authorized to delete this comment")
     db.delete(comment)
     db.commit()
