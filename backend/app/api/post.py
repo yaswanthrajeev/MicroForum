@@ -48,7 +48,8 @@ def create_post(post: PostCreate, db: Session = Depends(get_db), current_user: U
 @post_router.delete("/delete/{post_id}", response_model=PostResponse)
 def delete_post(post_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     logger.warning(f"User {current_user.username} is attempting to delete post ID {post_id}.")
-    return post_service.delete_post(db, post_id, current_user)
+    deleted_post = post_service.delete_post(db, post_id, current_user)
+    return deleted_post
 
 
 @post_router.get("/getAllPost", response_model=List[PostResponse])
