@@ -56,7 +56,7 @@ const CommentSection = ({ postId }) => {
         <div key={comment.id} className="comment-item">
           <p>{comment.body}</p>
           <p style={{ color: "red" }}>{comment.author_name}</p>
-          <button onClick={() => handleDelete(comment.id)}>Delete</button>
+          <button className="delete-btn" onClick={() => handleDelete(comment.id)} title="Delete comment">🗑️</button>
         </div>
       ))}
       <form onSubmit={handleSubmit} className="comment-form">

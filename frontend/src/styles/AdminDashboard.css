@@ -1,92 +1,328 @@
 /* ===========================
-   Charts & Stats Styles
+   Admin Dashboard - Professional Dark Theme
    =========================== */
 
-/* General sentiment layout */
+/* Main Dashboard Container */
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #18181b 0%, #23232a 100%);
+  min-height: 100vh;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.dashboard h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+/* Button Styles */
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.buttons button {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  border: none;
+  padding: 0.875rem 1.75rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+  position: relative;
+  overflow: hidden;
+  min-width: 140px;
+}
+
+.buttons button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.buttons button:hover::before {
+  left: 100%;
+}
+
+.buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+}
+
+.buttons button:active {
+  transform: translateY(0);
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #60a5fa;
+  background: rgba(96,165,250,0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(96,165,250,0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Error State */
+.error {
+  text-align: center;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border-radius: 12px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+  margin-bottom: 1rem;
+}
+
+/* User List Section */
+.user-list {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.user-list h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #f3f4f6;
+  text-align: center;
+}
+
+.user-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.user-list li {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  color: #e4e4e7;
+}
+
+.user-list li:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Sentiment Section */
 .sentiment {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  background: #18181b;
-  color: #f3f4f6;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* Stats layout */
+/* Stats Cards */
 .stats {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .stat {
-  flex: 1;
-  min-width: 160px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  padding: 1.5rem;
+  border-radius: 16px;
   text-align: center;
-  padding: 1rem;
-  margin: 0.5rem;
-  background: #23232a;
-  border-radius: 14px;
-  box-shadow: 0px 2px 8px rgba(0,0,0,.18);
-  transition: transform 0.2s;
-  color: #f3f4f6;
-  border: 1px solid #27272a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
 }
 
 .stat:hover {
-  transform: translateY(-3px) scale(1.03);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
 }
 
 .stat h3 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #f3f4f6;
+  color: #a1a1aa;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .stat span {
-  font-size: 1.75rem;
-  font-weight: bold;
-  color: #60a5fa;
+  font-size: 2.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: block;
 }
 
 /* Charts Section */
-.charts {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin: 2rem 0;
+.chart {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin-bottom: 2rem;
 }
 
-.chart {
-  flex: 1;
-  min-width: 300px;
-  max-width: 500px;
-  background: #23232a;
-  padding: 1.25rem;
-  border-radius: 14px;
-  box-shadow: 0px 4px 16px rgba(0,0,0,0.25);
-  text-align: center;
-  color: #f3f4f6;
-  border: 1px solid #27272a;
+.chart:last-child {
+  margin-bottom: 0;
 }
 
 .chart h3 {
   font-size: 1.25rem;
   font-weight: 600;
   color: #f3f4f6;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .chart canvas {
-  max-width: 100%;      /* Will respect parent .chart dimensions */
-  max-height: 300px;    /* Avoid oversized charts */
+  max-width: 100%;
+  max-height: 350px;
+  border-radius: 8px;
 }
 
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  .charts {
+/* Chart-specific styles */
+.chart.bar {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(96, 165, 250, 0.1) 100%);
+}
+
+.chart.pie {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+  }
+  
+  .dashboard h2 {
+    font-size: 2rem;
+  }
+  
+  .buttons {
     flex-direction: column;
     align-items: center;
   }
+  
+  .buttons button {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .user-list ul {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 0.75rem;
+  }
+  
+  .dashboard h2 {
+    font-size: 1.75rem;
+  }
+  
+  .user-list,
+  .sentiment {
+    padding: 1rem;
+  }
+  
+  .stat {
+    padding: 1rem;
+  }
+  
+  .stat span {
+    font-size: 1.75rem;
+  }
+}
+
+/* Smooth animations */
+.dashboard * {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom scrollbar */
+.user-list ul::-webkit-scrollbar {
+  width: 6px;
+}
+
+.user-list ul::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.user-list ul::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+  border-radius: 3px;
+}
+
+.user-list ul::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
 }
