@@ -7,7 +7,7 @@ import { useState } from "react";
 import AllPosts from './components/AllPosts';
 import CreatePost from './components/CreatePost';
 import AdminDashboard from './components/AdminDashboard';
-
+import Search from "./components/Search";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
@@ -20,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/create-post" element={isLoggedIn ? <CreatePost /> : <Login setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/post" element={<Search />} />
         <Route path="/" element={<AllPosts />} />
         {/* Add your home/dashboard or other routes here */}
       </Routes>

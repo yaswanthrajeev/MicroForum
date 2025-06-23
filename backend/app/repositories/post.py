@@ -25,3 +25,5 @@ def get_all_posts(db):
     if not posts:
         return []
     return posts
+def get_post(db, post_id):
+    return db.query(Post).filter(Post.id == post_id).first()

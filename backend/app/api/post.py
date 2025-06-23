@@ -61,3 +61,6 @@ def get_allPost(user_id: int, db: Session = Depends(get_db)):
 def get_all_posts(db: Session = Depends(get_db)):
     logger.debug("Fetching all posts...")
     return post_service.get_all_posts(db)
+@post_router.get("/getPost/{post_id}", response_model=PostResponse)
+def get_post(post_id :int, db: Session = Depends(get_db)):
+    return post_service.get_post(post_id,db)

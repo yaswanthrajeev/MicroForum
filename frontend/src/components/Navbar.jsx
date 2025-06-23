@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/Navbar.css"; // Adjust the path as necessary
+import "../styles/Navbar.css"; 
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -14,21 +14,29 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   };
 
   return (
-    <nav className="navbar">
-      <Link to="/">Home</Link>
-      {isLoggedIn && isAdmin && <Link to="/admin-dashboard">Admin Dashboard</Link>}
-      {!isLoggedIn ? (
-        <>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Signup</Link>
-        </>
-      ) : (
-        <>
-          <Link to="/create-post">Create Post</Link>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      )}
-    </nav>
+ <nav className="navbar">
+  <div className="links">
+    <Link to="/">Home</Link>
+    {isLoggedIn && isAdmin && (
+      <Link to="/admin-dashboard">Admin Dashboard</Link>
+    )}
+    {!isLoggedIn ? (
+      <>
+        <Link to="/login">Login</Link>
+        <Link to="/signup">Signup</Link>
+      </>
+    ) : (
+      <>
+        <Link to="/create-post">Create Post</Link>
+        <Link to="/post">Search Post</Link>
+        <button onClick={handleLogout}>Logout</button>
+      </>
+    )}
+  </div>
+
+
+</nav>
+
   );
 };
 

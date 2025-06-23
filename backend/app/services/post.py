@@ -56,3 +56,20 @@ def get_all_posts(db):
         post_dict["comments"] = comments
         result.append(post_dict)
     return result
+
+def get_post(post_id, db):
+    post= post_repo.get_post(db, post_id)
+    if not post:
+        raise HTTPException(status_code=404, detail="Post not found")
+    post_dict = {
+        "id": post.id,
+        "title": post.title,
+        "body": post.body,
+        "author_id": post.author_id,
+        "author_name": post.author.username if post.author else "",
+        "created_at": post.created_at,
+        "sentiment_score": post.sentiment_score,
+        "sentiment_label": post.sentiment_label,
+            # "comments": will be set below
+        }
+    return post_dict
