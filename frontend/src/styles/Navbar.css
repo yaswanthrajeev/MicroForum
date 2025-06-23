@@ -1,9 +1,9 @@
 /* Navbar Container */
 .navbar {
-  background: #111827;
-  color: #f9fafb;
+  background: #18181b;
+  color: #f3f4f6;
   padding: 1rem 2rem;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
 
   display: flex;
   align-items: center;
@@ -12,6 +12,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
 
 /* Left links */
@@ -26,7 +27,7 @@
 .navbar button {
   font-size: 1rem;
   font-weight: 500;
-  color: #f9fafb;
+  color: #f3f4f6;
   text-decoration: none;
   background: none;
   border: none;
@@ -35,7 +36,7 @@
   position: relative;
   padding: 0.25rem 0;
 
-  transition: color 0.2s ease;
+  transition: color 0.2s, border-bottom 0.2s;
 }
 
 .navbar a::after,
@@ -54,7 +55,8 @@
 
 .navbar a:hover,
 .navbar button:hover {
-  color: #3b82f6;
+  color: #60a5fa;
+  border-bottom: 2px solid #60a5fa;
 }
 
 .navbar a:hover::after,
@@ -75,15 +77,15 @@
   border: none;
   font-size: 1rem;
 
-  background-color: #1f2937;
-  color: #f9fafb;
+  background-color: #27272a;
+  color: #f3f4f6;
 }
 
 .navbar .search input::placeholder {
-  color: #9ca3af;
+  color: #a1a1aa;
 }
 
 .navbar .search input:focus {
   outline: none;
-  background-color: #374151;
+  background-color: #3f3f46;
 }

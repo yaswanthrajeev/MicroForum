@@ -1,0 +1,9 @@
+fastapi==0.110.2
+uvicorn[standard]==0.29.0
+SQLAlchemy==2.0.30
+pydantic==2.7.1
+pika==1.3.2
+transformers==4.41.1
+python-dotenv==1.0.1
+alembic==1.13.1
+psycopg2-binary==2.9.9  # Only if using PostgreSQL, safe to remove if using SQLite 

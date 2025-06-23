@@ -1,4 +1,9 @@
-
+body, #root {
+  background: #18181b !important;
+  color: #f3f4f6 !important;
+  font-family: 'Inter', Arial, sans-serif;
+  min-height: 100vh;
+}
 
 body {
   margin: 0;

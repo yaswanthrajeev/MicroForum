@@ -3,8 +3,7 @@ from sqlalchemy.orm import relationship
 from enum import Enum as PyEnum
 from app.db.base import Base
 import datetime
-from app.models.post import Post
-from app.models.comment import Comment
+
 
 class UserRole(PyEnum):
     NORMAL = "normal"

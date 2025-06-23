@@ -7,6 +7,8 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background: #18181b;
+  color: #f3f4f6;
 }
 
 /* Stats layout */
@@ -23,26 +25,28 @@
   text-align: center;
   padding: 1rem;
   margin: 0.5rem;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0px 2px 8px rgba(0,0,0,.08);
-  transition: transform 0.2s ease;
+  background: #23232a;
+  border-radius: 14px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,.18);
+  transition: transform 0.2s;
+  color: #f3f4f6;
+  border: 1px solid #27272a;
 }
 
 .stat:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.03);
 }
 
 .stat h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #111827;
+  color: #f3f4f6;
 }
 
 .stat span {
   font-size: 1.75rem;
   font-weight: bold;
-  color: #2563eb;
+  color: #60a5fa;
 }
 
 /* Charts Section */
@@ -58,17 +62,19 @@
   flex: 1;
   min-width: 300px;
   max-width: 500px;
-  background: #ffffff;
+  background: #23232a;
   padding: 1.25rem;
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,.1);
+  border-radius: 14px;
+  box-shadow: 0px 4px 16px rgba(0,0,0,0.25);
   text-align: center;
+  color: #f3f4f6;
+  border: 1px solid #27272a;
 }
 
 .chart h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
+  color: #f3f4f6;
   margin-bottom: 1rem;
 }
 

@@ -5,6 +5,16 @@ from api.comment import comment_route
 from api.admin import admin_router
 from fastapi.middleware.cors import CORSMiddleware
 import logging
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
+RABBITMQ_USER = os.getenv("RABBITMQ_USER", "user")
+RABBITMQ_PASS = os.getenv("RABBITMQ_PASS", "password")
+
+
+
 app = FastAPI()
 
 logging.basicConfig(

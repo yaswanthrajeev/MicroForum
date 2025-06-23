@@ -3,18 +3,18 @@ from app.api import post
 from app.repositories import comment as comment_repo
 from app.models.comment import Comment
 from app.nlp.sentiment import analyze_sentiment
+from app.messaging.publisher import publish_comment_for_analysis
 
-def process_comment(comment_text):
-    label, score = analyze_sentiment(comment_text)
+
     # Save to DB, alert admin, etc.
 
 def create_and_process_comment(db, post_id: int, user_id: int, body: str):
     # The repository already raises HTTPException if post is not found
     comment=comment_repo.create_comment(db, post_id, user_id, body)
+    #publish to rabbitmq
+    publish_comment_for_analysis(comment.id)
 
-    label,score=analyze_sentiment(body)
-    comment.sentiment_score = score
-    comment.sentiment_label = label
+
     db.commit()
     return comment
     

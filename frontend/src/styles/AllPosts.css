@@ -3,71 +3,80 @@
   max-width: 900px;
   margin: 2rem auto;
   padding: 1rem;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
+  background: #18181b;
+  color: #f3f4f6;
 }
 
 .all-posts-container h2 {
   font-size: 2rem;
   font-weight: 600;
   text-align: center;
-  color: #111827;
+  color: #f3f4f6;
   margin-bottom: 1.5rem;
 }
 
 .all-posts-container p {
   font-size: 1rem;
-  color: #555;
+  color: #a1a1aa;
 }
 
 /* Individual Post Card */
 .post-card {
-  background: #ffffff;
+  background: #23232a;
+  border-radius: 14px;
+  box-shadow: 0px 4px 16px rgba(0,0,0,0.25);
+  border: 1px solid #27272a;
   padding: 1.5rem;
   margin-bottom: 1.25rem;
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0,0,0,.1);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  color: #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .post-card:hover {
-  box-shadow: 0px 6px 16px rgba(0,0,0,.15);
-  transform: translateY(-2px);
+  box-shadow: 0px 8px 24px rgba(0,0,0,0.35);
+  transform: translateY(-2px) scale(1.01);
 }
 
 .post-card h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
+  color: #f3f4f6;
   margin: 0.25rem 0;
 }
 
 .post-card p {
   font-size: 1rem;
-  color: #555;
+  color: #d4d4d8;
   margin: 0.25rem 0;
 }
 
 .post-card p:nth-of-type(2) {
   font-style: italic;
-  color: #777;
+  color: #a1a1aa;
 }
 
 /* Comment Toggle Button */
 .comment-toggle-btn {
   margin: 1rem 0 0;
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  background-color: #2563eb;
-  color: #ffffff;
-  transition: background-color 0.2s ease;
+  background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+  color: #f3f4f6;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.15);
+  display: inline-block;
 }
 
 .comment-toggle-btn:hover {
-  background-color: #1d4ed8;
+  background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 100%);
+  transform: translateY(-2px) scale(1.03);
 }
 
 /* Responsive Styles */
