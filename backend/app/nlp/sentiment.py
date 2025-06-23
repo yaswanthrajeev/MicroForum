@@ -1,8 +1,8 @@
 from transformers import pipeline
 
 classifier = pipeline(
-    "sentiment-analysis",
-    model="cardiffnlp/twitter-roberta-base-sentiment-latest",
+    "sentiment-analysis",model="cardiffnlp/twitter-roberta-base-sentiment"
+    ,
     device=-1  # set -1 for CPU, or specific GPU index
 )
 

@@ -1,0 +1,13 @@
+Text,A Label,A Score,A Time (s),B Label,B Score,B Time (s),C Label,C Score,C Time (s)
+I really love this feature! It's amazing.,POS,0.9924,1.1624,LABEL_2,0.9927,0.0503,POSITIVE,0.9999,0.0312
+This is the worst experience I've had.,NEG,0.9828,0.0489,LABEL_0,0.9781,0.0619,NEGATIVE,0.9998,0.0324
+"It's okay, not too bad.",POS,0.6488,0.0564,LABEL_2,0.7895,0.0506,POSITIVE,0.9997,0.0253
+I'm not sure about this.,NEG,0.5564,0.0491,LABEL_1,0.6265,0.0488,NEGATIVE,0.9997,0.0254
+this is okay,POS,0.6416,0.0471,LABEL_2,0.8366,0.0488,POSITIVE,0.9998,0.0244
+love this,POS,0.9899,0.0462,LABEL_2,0.9637,0.0449,POSITIVE,0.9999,0.0262
+average,NEU,0.8672,0.0475,LABEL_1,0.5347,0.0495,POSITIVE,0.7222,0.0299
+"not too good, not too bad",NEG,0.8708,0.0573,LABEL_1,0.3931,0.0572,NEGATIVE,0.9983,0.0312
+I hate this so much.,NEG,0.9822,0.0596,LABEL_0,0.979,0.0703,NEGATIVE,0.9995,0.0263
+"Best service I've used, highly recommend!",POS,0.992,0.0571,LABEL_2,0.9791,0.0594,POSITIVE,0.9998,0.0298
+Terrible! Will never use this again.,NEG,0.9833,0.0662,LABEL_0,0.9778,0.0559,NEGATIVE,0.9987,0.0263
+"Quite satisfied, could be better.",POS,0.9752,0.0556,LABEL_2,0.5513,0.0534,POSITIVE,0.9978,0.0279
