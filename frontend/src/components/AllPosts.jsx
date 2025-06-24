@@ -44,16 +44,19 @@ const AllPosts = () => {
           <h3>{post.title}</h3>
           <p>{post.body}</p>
           <p>{post.author_name}</p>
-          <button onClick={() => handleDelete(post.id)}>Delete</button>
           
-          <button
-            className="comment-toggle-btn"
-            onClick={() =>
-              setSelectedPostId(selectedPostId === post.id ? null : post.id)
-            }
-          >
-            {selectedPostId === post.id ? "Hide Comments" : "Show Comments"}
-          </button>
+          <div className="post-actions">
+            <button onClick={() => handleDelete(post.id)}>Delete</button>
+            
+            <button
+              className="comment-toggle-btn"
+              onClick={() =>
+                setSelectedPostId(selectedPostId === post.id ? null : post.id)
+              }
+            >
+              {selectedPostId === post.id ? "Hide Comments" : "Show Comments"}
+            </button>
+          </div>
           
           {selectedPostId === post.id && <CommentSection postId={post.id} />}
         </div>

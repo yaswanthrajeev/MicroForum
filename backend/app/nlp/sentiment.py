@@ -8,4 +8,12 @@ classifier = pipeline(
 
 def analyze_sentiment(text: str):
     result = classifier(text)[0]
-    return result["label"], float(result["score"])
+    # Convert raw labels to human-readable labels
+    label_mapping = {
+        "LABEL_0": "Negative",
+        "LABEL_1": "Neutral", 
+        "LABEL_2": "Positive"
+    }
+    raw_label = result["label"]
+    human_label = label_mapping.get(raw_label, "Neutral")  # Default to Neutral if unknown
+    return human_label, float(result["score"])
