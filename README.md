@@ -1,119 +1,117 @@
-# 📘 MicroForum — Design Document
+# MicroForum
 
-**MicroForum** is a forum-style platform where users can create posts and comments. Each content item is automatically analyzed for sentiment using an NLP service. Admin users can monitor sentiment trends via an analytics dashboard.
+A microforum web application with role-based access, sentiment analysis, and an admin dashboard for analytics. Built with FastAPI, React, RabbitMQ, and Docker.
 
-## 1. Database Design
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Database Schema](#database-schema)
+- [API Endpoints](#api-endpoints)
+- [Sentiment Analysis](#sentiment-analysis)
+- [Setup & Installation](#setup--installation)
+- [Usage](#usage)
+- [Docker](#docker)
+- [Contributing](#contributing)
+- [License](#license)
 
-The system consists of three main entities:
+## Overview
+MicroForum is a modern forum application supporting user authentication, post and comment creation, sentiment analysis, and an admin dashboard for analytics. It is designed for easy deployment and scalability using Docker.
 
-- **Users**: Includes both normal and admin users  
-- **Posts**: Created by users, with sentiment metadata  
-- **Comments**: Created on posts, with sentiment metadata  
+## Features
+- JWT-based authentication (signup/login)
+- Role-based access (normal user/admin)
+- Create, view, and delete posts and comments
+- Sentiment analysis for posts and comments
+- Admin dashboard with sentiment analytics (pie, line, bar charts)
+- Asynchronous processing with RabbitMQ
+- Containerized with Docker
 
----
+## Tech Stack
+- **Backend:** FastAPI, SQLAlchemy, Pydantic, RabbitMQ
+- **Frontend:** React.js, Tailwind CSS
+- **Database:** SQLite
+- **AI/NLP:** HuggingFace Transformers (Twitter-RoBERTa sentiment model)
+- **Containerization:** Docker, Docker Compose
 
-### 1.1 Tables
+## Architecture
+- **API Layer:** Handles HTTP requests and responses (app/api/)
+- **Service Layer:** Business logic and async jobs (app/services/)
+- **Repository Layer:** Database operations (app/repositories/)
+- **Models:** SQLAlchemy ORM models (app/models/)
+- **Schemas:** Pydantic data validation (app/schemas/)
+- **Message Queue:** RabbitMQ for async sentiment analysis
 
-#### 🧑 Users Table
+## AI Model Used
+This project uses a transformer-based sentiment analysis model from HuggingFace:
+- **Model:** cardiffnlp/twitter-roberta-base-sentiment
+- **Type:** RoBERTa, pre-trained and fine-tuned for sentiment analysis on social media and short text (Twitter).
+- **Why this model?**
+  - Outperformed other tested models (BERTweet, DistilBERT SST-2) in accuracy and speed for forum-style and social text.
+  - Provides three sentiment classes: Positive, Neutral, Negative.
+  - Easy integration with Python using the `transformers` library.
 
-| Field         | Type          | Constraints                | Description                   |
-|---------------|---------------|----------------------------|-------------------------------|
-| id            | UUID / INT PK | PRIMARY KEY                | Unique user ID                |
-| username      | TEXT          | UNIQUE, NOT NULL           | Username                      |
-| email         | TEXT          | UNIQUE, NOT NULL           | User email address            |
-| password_hash | TEXT          | NOT NULL                   | Hashed password               |
-| role          | TEXT          | CHECK ('normal', 'admin')  | User role                     |
+## Message Queuing & Asynchronous Processing
+- **Message Queue:** RabbitMQ is used to handle asynchronous tasks, specifically for sentiment analysis.
+- **How it works:**
+  - When a post or comment is created, a message is published to a queue.
+  - A background worker consumes messages from the queue and performs sentiment analysis using the AI model.
+  - The sentiment result is then stored back in the database.
+- **Benefits:**
+  - Decouples user-facing API from heavy AI processing.
+  - Improves responsiveness and scalability.
 
----
+## General Backend Flow
+1. **Client** sends a request (e.g., create post/comment) to the **API Layer** (FastAPI).
+2. **API Layer** validates and forwards the request to the **Service Layer**.
+3. **Service Layer** handles business logic and, if needed, publishes a message to RabbitMQ for async processing.
+4. **Repository Layer** manages database operations (CRUD).
+5. **Worker** listens to the message queue, processes sentiment analysis, and updates the database.
+6. **Client** can fetch results (posts/comments with sentiment) via API endpoints.
 
-#### 📝 Posts Table
+![Architecture Diagram](images/archi.png)
 
-| Field           | Type          | Constraints                | Description                   |
-|-----------------|---------------|----------------------------|-------------------------------|
-| id              | UUID / INT PK | PRIMARY KEY                | Unique post ID                |
-| title           | TEXT          | NOT NULL                   | Title of the post             |
-| body            | TEXT          | NOT NULL                   | Main content of the post      |
-| author_id       | UUID / INT FK | REFERENCES users(id)       | Author of the post            |
-| sentiment_score | FLOAT         |                            | Sentiment score (-1 to 1)     |
-| sentiment_label | TEXT          |                            | Sentiment label (Positive/Negative/Neutral) |
 
----
 
-#### 💬 Comments Table
+## Sentiment Analysis
+Three transformer models were tested:
+- **BERTweet** (`finiteautomata/bertweet-base-sentiment-analysis`)
+- **Twitter-RoBERTa** (`cardiffnlp/twitter-roberta-base-sentiment`) ← *Selected for best accuracy and speed*
+- **DistilBERT SST-2** (`distilbert-base-uncased-finetuned-sst-2-english`)
 
-| Field           | Type          | Constraints                | Description                   |
-|-----------------|---------------|----------------------------|-------------------------------|
-| id              | UUID / INT PK | PRIMARY KEY                | Unique comment ID             |
-| post_id         | UUID / INT FK | REFERENCES posts(id)       | Associated post               |
-| body            | TEXT          | NOT NULL                   | Comment text                  |
-| author_id       | UUID / INT FK | REFERENCES users(id)       | Author of the comment         |
-| sentiment_score | FLOAT         |                            | Sentiment score (-1 to 1)     |
-| sentiment_label | TEXT          |                            | Sentiment label               |
+Twitter-RoBERTa was chosen for its superior performance on social/forum text.
 
----
+## Setup & Installation
+1. **Clone the repository:**
+   ```bash
+   git clone <repo-url>
+   cd microforum-dev
+   ```
+2. **Backend Setup:**
+   ```bash
+   cd MicroForum/backend
+   pip install -r requirements.txt
+   # Set up environment variables as needed
+   ```
+3. **Frontend Setup:**
+   ```bash
+   cd ../frontend
+   npm install
+   ```
 
-### 1.2 UML Diagram
+## Usage
+- Access the frontend at `http://localhost:3000`
+- API available at `http://localhost:8000/docs`
+- Admin dashboard available after login as admin
 
-<p align="center">
-  <img src="/uml.jpg" width="600" alt="UML Diagram" />
-</p>
 
----
+## Contributing
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
 
-## 2. REST API Design
-
-Defines how frontend interacts with backend through HTTP. Each endpoint is mapped to specific roles and permissions.
-
----
-
-### 🔐 2.1 Authentication (JWT)
-
-| Method | Endpoint        | Description                 | Access       |
-|--------|-----------------|-----------------------------|--------------|
-| POST   | `/auth/signup`  | Register a new user         | Public       |
-| POST   | `/auth/login`   | Authenticate and get token  | Public       |
-
----
-
-### 👤 2.2 User Endpoints
-
-| Method | Endpoint        | Description             | Access         |
-|--------|-----------------|-------------------------|----------------|
-| GET    | `/users/me`     | Get current user info   | Authenticated  |
-| GET    | `/users/:id`    | Get user by ID          | Admin only     |
-
----
-
-### 📝 2.3 Post Endpoints
-
-| Method | Endpoint        | Description                             | Access       |
-|--------|-----------------|-----------------------------------------|--------------|
-| GET    | `/posts/`       | Get all posts                           | Public       |
-| GET    | `/posts/:id`    | Get a specific post                     | Public       |
-| POST   | `/posts/`       | Create a new post (with sentiment)      | Normal User  |
-| DELETE | `/posts/:id`    | Delete your own post                    | Normal User  |
-
----
-
-### 💬 2.4 Comment Endpoints
-
-| Method | Endpoint                | Description                              | Access       |
-|--------|-------------------------|------------------------------------------|--------------|
-| POST   | `/posts/:id/comments`   | Add comment to a post (with sentiment)   | Normal User  |
-| GET    | `/posts/:id/comments`   | View comments on a post                  | Public       |
-| DELETE | `/comments/:id`         | Delete your own comment                  | Normal User  |
-
----
-
-### 📊 2.5 Admin Analytics Dashboard
-
-| Method | Endpoint                    | Description                              | Access |
-|--------|-----------------------------|------------------------------------------|--------|
-| GET    | `/admin/sentiment-summary`  | Pie chart: Sentiment distribution        | Admin  |
-| GET    | `/admin/sentiment-trend`    | Line chart: Sentiment trend over time    | Admin  |
-| GET    | `/admin/sentiment-breakdown`| Bar chart: Sentiment by user/type        | Admin  |
-| GET    | `/admin/posts`              | View all posts                           | Admin  |
-| GET    | `/admin/comments`           | View all comments                        | Admin  |
-
----
-
+## License
+MIT License 
