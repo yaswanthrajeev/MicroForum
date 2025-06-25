@@ -1,14 +1,14 @@
 from typing import List
 from fastapi import APIRouter,Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from schemas.post import PostCreate, PostResponse
-from services.jwt import verify_access_token
+from app.schemas.post import PostCreate, PostResponse
+from app.services.jwt import verify_access_token
 from app.models.user import User
 from app.db.session import SessionLocal
 from fastapi.security import OAuth2PasswordBearer
 from app.models.post import Post
 from app.models.comment import Comment
-from schemas.comment import CommentResponse, CommentCreate
+from app.schemas.comment import CommentResponse, CommentCreate
 from app.services import comment as comment_service
 import logging
 logger = logging.getLogger(__name__)

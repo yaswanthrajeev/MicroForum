@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import "../styles/CommentSection.css";
 
 const CommentSection = ({ postId }) => {
   const [comments, setComments] = useState([]);
@@ -51,12 +52,20 @@ const CommentSection = ({ postId }) => {
 
   return (
     <div className="comment-section">
-      <h4>Comments</h4>
+      <h4 className="mb-4 text-lg font-semibold">Comments</h4>
+      {comments.length === 0 && <p className="text-muted">No comments yet.</p>}
       {comments.map(comment => (
         <div key={comment.id} className="comment-item">
-          <p>{comment.body}</p>
-          <p style={{ color: "red" }}>{comment.author_name}</p>
-          <button className="delete-btn" onClick={() => handleDelete(comment.id)} title="Delete comment">🗑️</button>
+          <div className="avatar">
+            {comment.author_name ? comment.author_name[0].toUpperCase() : "?"}
+          </div>
+          <div className="comment-content">
+            <div className="comment-header">
+              <span className="author-name">{comment.author_name}</span>
+              <button className="delete-btn" onClick={() => handleDelete(comment.id)} title="Delete comment">🗑️</button>
+            </div>
+            <p className="comment-body">{comment.body}</p>
+          </div>
         </div>
       ))}
       <form onSubmit={handleSubmit} className="comment-form">
@@ -67,9 +76,9 @@ const CommentSection = ({ postId }) => {
           onChange={e => setBody(e.target.value)}
           required
         />
-        <button type="submit">Comment</button>
+        <button type="submit" className="btn btn-primary">Comment</button>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="text-error">{error}</p>}
     </div>
   );
 };

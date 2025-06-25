@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from .api import auth
-from api.post import post_router
-from api.comment import comment_route
-from api.admin import admin_router
+from app.api import auth
+from app.api.post import post_router
+from app.api.comment import comment_route
+from app.api.admin import admin_router
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import os

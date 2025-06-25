@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../styles/Form.css";
 
 const Login = ({ setIsLoggedIn }) => {
     const [username, setUsername] = useState("");
@@ -34,8 +35,8 @@ const Login = ({ setIsLoggedIn }) => {
     return (
     <div className="form-container">
       <h2>Login</h2>
-      {error && <p style={{color: "red"}}>{error}</p>}
-      {success && <p style={{color: "green"}}>Login successful!</p>}
+      {error && <p className="text-error">{error}</p>}
+      {success && <p className="text-success">Login successful!</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -43,14 +44,14 @@ const Login = ({ setIsLoggedIn }) => {
           value={username}
           onChange={e => setUsername(e.target.value)}
           required
-        /><br />
+        />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
-        /><br />
+        />
         <button type="submit">Login</button>
       </form>
     </div>

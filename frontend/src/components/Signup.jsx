@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/Form.css"; // Fixed import path
+import "../styles/Form.css";
 const Signup = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -33,8 +33,8 @@ const Signup = () => {
     return (
     <div className="form-container">
       <h2>Signup</h2>
-      {error && <p style={{color: "red"}}>{error}</p>}
-      {success && <p style={{color: "green"}}>Signup successful!</p>}
+      {error && <p className="text-error">{error}</p>}
+      {success && <p className="text-success">Signup successful!</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -42,21 +42,21 @@ const Signup = () => {
           value={username}
           onChange={e => setUsername(e.target.value)}
           required
-        /><br />
+        />
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
           required
-        /><br />
+        />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
-        /><br />
+        />
         <button type="submit">Signup</button>
       </form>
     </div>
