@@ -44,7 +44,7 @@ def create_and_process_comment(comment: CommentCreate, post_id: int, db: Session
         "body": created_comment.body,
         "author_id": created_comment.author_id,
         "author_name": current_user.username,
-         "sentiment_score": created_comment.sentiment_score,
+        "sentiment_score": created_comment.sentiment_score,
         "sentiment_label": created_comment.sentiment_label,
     }
     return response
