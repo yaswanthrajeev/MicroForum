@@ -1,5 +1,5 @@
-# Use Python 3.12 slim image (smaller and faster)
-FROM python:3.12-slim
+# Use Python 3.11 slim image (better compatibility with ML libraries)
+FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app

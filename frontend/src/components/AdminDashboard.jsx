@@ -102,7 +102,26 @@ const AdminDashboard = () => {
     }
     setShowUsers(!showUsers);
   };
-  
+  const handlePromoteToAdmin = async (username) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.patch(`http://localhost:8000/admin/promote/${username}`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      // Refresh the users list after promotion
+      const usersRes = await axios.get("http://localhost:8000/admin/users", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUsers(usersRes.data);
+      
+      // Show success message (you can add a toast notification here)
+      console.log(`User ${username} promoted to admin successfully`);
+    } catch (err) {
+      setError("Failed to promote user to admin.");
+      console.error("Promotion error:", err);
+    }
+  };
   const handleToggleSentiment = async () => {
     if (!showSentiment) {
       await fetchSentiments();
@@ -303,8 +322,18 @@ const AdminDashboard = () => {
                     <div className="user-email">{user.email}</div>
                   </div>
                 </div>
-                <div className={`user-role ${user.role?.toLowerCase() || 'user'}`}>
-                  {user.role || 'User'}
+                <div className="user-actions">
+                  <div className={`user-role ${user.role?.toLowerCase() || 'user'}`}>
+                    {user.role || 'User'}
+                  </div>
+                  {user.role !== 'admin' && (
+                    <button 
+                      className="btn btn-small btn-primary"
+                      onClick={() => handlePromoteToAdmin(user.username)}
+                    >
+                      Promote to Admin
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

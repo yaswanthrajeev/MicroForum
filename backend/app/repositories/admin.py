@@ -1,6 +1,8 @@
 from app.models.comment import Comment 
 from app.models.user import User, UserRole
 from app.models.post import Post
+import logging
+logger = logging.getLogger(__name__)
 def delete_comment(db, post):
     db.delete(post)
     db.commit()
