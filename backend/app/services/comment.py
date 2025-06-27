@@ -2,7 +2,6 @@ from fastapi import HTTPException
 from app.api import post
 from app.repositories import comment as comment_repo
 from app.models.comment import Comment
-from app.nlp.sentiment import analyze_sentiment
 from app.messaging.publisher import publish_comment_for_analysis
 import logging
 
