@@ -12,8 +12,8 @@ from app.models.comment import Comment
 from app.nlp.sentiment import analyze_sentiment
 
 RABBITMQ_HOST = os.getenv("RABBITMQ_HOST", "localhost")
-RABBITMQ_USER = os.getenv("RABBITMQ_USER", "user")
-RABBITMQ_PASS = os.getenv("RABBITMQ_PASS", "password")
+RABBITMQ_USER = os.getenv("RABBITMQ_USER", "guest")
+RABBITMQ_PASS = os.getenv("RABBITMQ_PASS", "guest")
 QUEUE_NAME = "sentiment_analysis_queue"
 
 def process_comment_sentiment(comment_id: int):

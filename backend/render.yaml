@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: microforum-backend
+    env: python
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: RABBITMQ_HOST
+        value: localhost
+      - key: RABBITMQ_USER
+        value: guest
+      - key: RABBITMQ_PASS
+        value: guest 
