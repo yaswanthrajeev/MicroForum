@@ -13,4 +13,4 @@ def make_admin(username):
     db.close()
 
 if __name__ == "__main__":
-    make_admin("yashhh")  # Replace with the username you want to promote
+    make_admin("user2")  # Replace with the username you want to promote

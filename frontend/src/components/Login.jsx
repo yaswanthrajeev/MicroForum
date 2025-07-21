@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/Form.css";
+import API_BASE_URL from "../config";
 
 const Login = ({ setIsLoggedIn }) => {
     const [username, setUsername] = useState("");
@@ -15,7 +16,7 @@ const Login = ({ setIsLoggedIn }) => {
         setError("");
         setSuccess(false);
         try {
-            const response = await axios.post("http://localhost:8000/auth/login",{
+            const response = await axios.post(`${API_BASE_URL}/auth/login`,{
                 username,
                 password,
             });

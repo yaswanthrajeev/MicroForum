@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../styles/Form.css";
+import API_BASE_URL from "../config";
 
 const CreatePost = ({ onPostCreated }) => {
   const [title, setTitle] = useState("");
@@ -24,7 +25,7 @@ const CreatePost = ({ onPostCreated }) => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:8000/posts/create",
+        `${API_BASE_URL}/posts/create`,
         { title: title.trim(), body: body.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       );

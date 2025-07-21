@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import CommentSection from "./CommentSection";
 import "../styles/AllPosts.css"; // Adjust the path as necessary
+import API_BASE_URL from "../config";
 
 const AllPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -10,7 +11,7 @@ const AllPosts = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/posts/all");
+      const res = await axios.get(`${API_BASE_URL}/posts/all`);
       setPosts(res.data);
     } catch (err) {
       setPosts([]);
@@ -20,7 +21,7 @@ const AllPosts = () => {
   const handleDelete = async (postId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:8000/posts/delete/${postId}`, {
+      await axios.delete(`${API_BASE_URL}/posts/delete/${postId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       await fetchPosts();
