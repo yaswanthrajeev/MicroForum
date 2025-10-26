@@ -18,20 +18,18 @@ RUN apt-get update && \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Rust (required for tokenizers compilation)
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Upgrade pip/tools
+RUN python -m pip install --upgrade pip setuptools wheel
 
 # Copy requirements first for better caching
-COPY requirements.txt .
+COPY requirements-backend.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-backend.txt -f https://download.pytorch.org/whl/cpu/torch_stable.html
 
 # Copy application code
-COPY app/ ./app/
-COPY alembic/ ./alembic/
-COPY alembic.ini .
+COPY . .
 
 # Create non-root user
 

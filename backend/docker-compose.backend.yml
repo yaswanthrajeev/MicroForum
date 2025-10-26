@@ -1,0 +1,75 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: BLOG
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - microforum-net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    ports:
+      - "15672:15672" # management UI
+      - "5672:5672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - microforum-net
+
+  backend:
+    # build from local backend folder by default; to use remote image set BACKEND_IMAGE in .env
+    image: ${BACKEND_IMAGE:-}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - rabbitmq
+    environment:
+      SQLALCHEMY_DATABASE_URL: ${SQLALCHEMY_DATABASE_URL:-postgresql://postgres:${POSTGRES_PASSWORD:-12345678}@postgres:5432/BLOG}
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_PASS: ${RABBITMQ_PASS:-guest}
+      DEV: "0"
+    ports:
+      - "8000:8000"
+    networks:
+      - microforum-net
+
+  worker:
+    # build from local sentiment Dockerfile; to use remote image set WORKER_IMAGE in .env
+    image: ${WORKER_IMAGE:-}
+    build:
+      context: .
+      dockerfile: sentiment.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - rabbitmq
+      - postgres
+    environment:
+      SQLALCHEMY_DATABASE_URL: ${SQLALCHEMY_DATABASE_URL:-postgresql://postgres:${POSTGRES_PASSWORD:-12345678}@postgres:5432/BLOG}
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_PASS: ${RABBITMQ_PASS:-guest}
+    networks:
+      - microforum-net
+
+volumes:
+  pgdata:
+  rabbitmq_data:
+
+networks:
+  microforum-net:
+    driver: bridge

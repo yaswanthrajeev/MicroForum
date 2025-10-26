@@ -65,8 +65,3 @@ test/
 tests/
 *_test.py
 test_*.py
-
-# New requirements files
-requirements.txt
-requirements-backend.txt
-requirements-sentiment.txt 
