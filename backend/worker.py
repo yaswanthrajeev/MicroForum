@@ -42,14 +42,15 @@ def callback(ch, method, properties, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 def main():
-    # Create connection with credentials
     credentials = pika.PlainCredentials(RABBITMQ_USER, RABBITMQ_PASS)
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(
             host=RABBITMQ_HOST,
+            virtual_host=os.getenv("RABBITMQ_VHOST", "/"),  # ✅ Add this line
             credentials=credentials
         )
     )
+
     channel = connection.channel()
     channel.queue_declare(queue=QUEUE_NAME, durable=True)
     channel.basic_qos(prefetch_count=1)
