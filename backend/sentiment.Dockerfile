@@ -10,7 +10,6 @@ WORKDIR /app
 # Install system deps commonly needed by ML / audio / image libs
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      build-essential \
       git \
       curl \
       ca-certificates \

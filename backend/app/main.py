@@ -36,6 +36,7 @@ app.add_middleware(
 )
 
 
+
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(post_router, prefix="/posts", tags=["post"])
 app.include_router(comment_route, prefix="/comment", tags=["comment"])
